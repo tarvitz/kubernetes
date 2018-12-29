@@ -1,0 +1,15 @@
+.:53 {
+    errors
+    log stdout
+    health :8081
+    kubernetes cluster.local 10.200.0.0/16 {
+        endpoint  https://178.79.168.130:6443
+        tls /var/lib/kubernetes/kubernetes.pem /var/lib/kubernetes/kubernetes-key.pem /var/lib/kubernetes/ca.pem
+        pods verified
+        upstream /etc/resolv.conf
+        kubeconfig /var/lib/kubernetes/config/kubeconfig/coredns.kubeconfig default
+    }
+    proxy . /etc/resolv.conf
+    cache 30
+}
+

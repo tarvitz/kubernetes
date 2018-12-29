@@ -1,0 +1,25 @@
+[Unit]
+Description=Flanneld overlay address etcd agent
+After=network.target
+Before=etcd.service 
+
+[Service]
+Type=notify
+Environment=FLANNEL_ETCD=https://127.0.0.1:2379
+Environment=PUBLIC_IP=178.79.168.130
+
+ExecStart=/usr/bin/flanneld -etcd-endpoints=${FLANNEL_ETCD} -etcd-prefix=${FLANNEL_ETCD_KEY} \
+    -etcd-cafile=/etc/etcd/ca.pem \
+    -etcd-certfile=/etc/etcd/kubernetes.pem \
+    -etcd-keyfile=/etc/etcd/kubernetes-key.pem \
+    -etcd-prefix=/coreos.com/network \
+    -healthz-ip=127.0.0.1 \
+    -subnet-file=/run/flannel/subnet.env \
+    -public-ip=${PUBLIC_IP} \
+    -kubeconfig-file=/var/lib/kubernetes/config/kubeconfig/flanneld.kubeconfig \
+    $FLANNEL_OPTIONS
+
+ExecStartPost=/usr/libexec/flannel/mk-docker-opts.sh -k DOCKER_NETWORK_OPTIONS -d /run/flannel/docker
+
+[Install]
+RequiredBy=docker.service

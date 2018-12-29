@@ -1,0 +1,12 @@
+[Unit]
+Description=CoreDNS
+Documentation=https://coredns.io/
+After=network.target kube-apiserver.service
+
+[Service]
+ExecStart=/opt/bin/coredns -conf /etc/coredns/Corefile 
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

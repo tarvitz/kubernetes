@@ -1,0 +1,5 @@
+portmap is using to expose ports globaly
+flannel to route traffic over nodes
+
+if you migrating from docker don't forget to remove docker0 bridge interface
+if you have used flannel network to route traffic properly

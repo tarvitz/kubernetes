@@ -1,0 +1,26 @@
+[Unit]
+Description=Kubernetes Kubelet
+Documentation=https://github.com/kubernetes/kubernetes
+After=kube-apiserver.service
+Requires=kube-apiserver.service containerd.service
+
+[Service]
+ExecStart=kubelet \
+        --root-dir=/var/lib/kubernetes/kubelet \
+        --config=/var/lib/kubernetes/kubelet/kubelet-config.yaml \
+        --allow-privileged \
+        --kubeconfig=/var/lib/kubernetes/kubelet/kubeconfig \
+        --cni-bin-dir=/opt/cni/bin \
+        --cni-conf-dir=/etc/cni/net.d/ \
+        --network-plugin=cni \
+        --container-runtime=remote \
+        --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock \
+        --image-pull-progress-deadline=10m \
+        --node-labels=w40k.net \
+        --v=2
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+

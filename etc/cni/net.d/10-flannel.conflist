@@ -1,0 +1,20 @@
+{
+  "name": "cbr0",
+  "plugins": [
+    {
+      "type": "flannel",
+      "name": "kubenet",
+      "delegate": {
+        "hairpinMode": true,
+        "isDefaultGateway": true
+      }
+    },
+    {
+      "type": "portmap",
+      "capabilities": {
+        "portMappings": true
+      },
+      "externalSetMarkChain": "KUBE-MARK-MASQ"
+    } 
+  ]
+}
