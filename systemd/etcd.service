@@ -1,29 +1,36 @@
 [Unit]
-Description=Etcd Server
+Description=etcd - highly-available key value store
+Documentation=https://github.com/coreos/etcd
+Documentation=man:etcd
 After=network.target
+Wants=network-online.target
 
 [Service]
+Environment=IP_MASTER_GLOBAL=178.79.148.185
+Environment=IP_MASTER_LOCAL=192.168.153.60
+Environment=ETCD_NAME=%H
+Environment=ETCD_DATA_DIR=/var/lib/etcd/default
+EnvironmentFile=-/etc/default/%p
 Type=notify
-PermissionsStartOnly=true
-Environment=ETCD_DATA_DIR=/var/lib/etcd
-Environment=ETCD_NAME=w40k
-Environment=IP_MASTER=178.79.168.130
-WorkingDirectory=/var/lib/etcd/
 User=etcd
-Group=etcd
-ExecStart=/usr/bin/etcd --listen-client-urls https://${IP_MASTER}:2379,https://127.0.0.1:2379 \
-           --advertise-client-urls https://${IP_MASTER}:2379 \
-           --trusted-ca-file=/etc/etcd/ca.pem \
-           --cert-file=/var/lib/kubernetes/kubernetes.pem \
-           --key-file=/var/lib/kubernetes/kubernetes-key.pem \
-           --peer-cert-file=/var/lib/kubernetes/kubernetes.pem \
-           --peer-key-file=/var/lib/kubernetes/kubernetes-key.pem \
-           --peer-trusted-ca-file=/var/lib/kubernetes/ca.pem \
-           --peer-client-cert-auth \
-           --initial-cluster-state new \
-           --client-cert-auth
-Restart=on-failure
+PermissionsStartOnly=true
+#ExecStart=/bin/sh -c "GOMAXPROCS=$(nproc) /usr/bin/etcd $DAEMON_ARGS"
+ExecStart=/usr/bin/etcd --listen-client-urls https://${IP_MASTER_GLOBAL}:2379,https://${IP_MASTER_LOCAL}:2379,https://127.0.0.1:2379 \
+    --advertise-client-urls https://${IP_MASTER_GLOBAL}:2379,https://${IP_MASTER_LOCAL}:2379 \
+    --trusted-ca-file=/var/lib/kubernetes/ca.pem \
+    --cert-file=/var/lib/kubernetes/kubernetes.pem \
+    --key-file=/var/lib/kubernetes/kubernetes-key.pem \
+    --peer-cert-file=/var/lib/kubernetes/kubernetes.pem \
+    --peer-key-file=/var/lib/kubernetes/kubernetes-key.pem \
+    --peer-trusted-ca-file=/var/lib/kubernetes/ca.pem \
+    --peer-client-cert-auth \
+    --initial-cluster-state new \
+    --client-cert-auth
+
+Restart=on-abnormal
+#RestartSec=10s
 LimitNOFILE=65536
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
+Alias=etcd2.service

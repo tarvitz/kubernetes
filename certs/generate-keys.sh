@@ -48,19 +48,21 @@ for idx in ${!EXTERNAL_IPS[*]}; do
 EOF
 
   EXTERNAL_IP=${EXTERNAL_IPS[$idx]}
-  INTERNAL_IP=${INTERNAL_IPS[$idx]}
+  CLUSTER_IP=${CLUSTER_IPS[$idx]}
   NODE_NAME=${NODE_NAMES[$idx]}
 
-  echo node name: ${NODE_NAME}
+  echo node name-global: ${NODE_NAME}
   echo node internal name: node-${idx}
+
   echo node external ip: $EXTERNAL_IP
   echo node internal ip: $INTERNAL_IP
+  echo node cluster ip: $CLUSTER_IP
 
   cfssl gencert \
       -ca=ca.pem \
       -ca-key=ca-key.pem \
       -config=ca-config.json \
-      -hostname=${NODE_NAME},${_instance},${EXTERNAL_IP},${INTERNAL_IP} \
+      -hostname=${NODE_NAME},${_instance},${EXTERNAL_IP},${CLUSTER_IP} \
       -profile=kubernetes \
       ${_instance}-csr.json | cfssljson -bare ${_instance}
 
@@ -108,13 +110,12 @@ echo "generating kube-api keys: kubernetes-key.pem and kubernetes.pem"
 if [[ -f kubernetes-key.pem && kubernetes.pem ]]; then
     echo "already generated, skippig .."
 else
-
   #: 10.32.0.1 is for default kuberentes service
   cfssl gencert \
     -ca=ca.pem \
     -ca-key=ca-key.pem \
     -config=ca-config.json \
-    -hostname=10.32.0.1,${KUBE_API_SERVER_PUBLIC_ADDRESS},178.79.158.143,127.0.0.1,w40k.net,kubernetes.default,cluster.local \
+    -hostname=10.32.0.1,${KUBE_API_SERVER_PUBLIC_ADDRESS},${KUBE_API_SERVER_INTERNAL_ADDRESS},${CLUSTER_NAME},127.0.0.1,kubernetes.default,cluster.local \
     -profile=kubernetes \
     kubernetes-csr.json | cfssljson -bare kubernetes
 fi

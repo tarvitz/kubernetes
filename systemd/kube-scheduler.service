@@ -5,9 +5,8 @@ After=kube-apiserver.service
 Requires=kube-apiserver.service
 
 [Service]
-ExecStart=kube-scheduler \
-    --kubeconfig=/var/lib/kubernetes/kube-scheduler.kubeconfig \
-    --config=/etc/kubernetes/config/kube-scheduler.yaml
+#L modify kube-scheduler.yaml kubeconfig location before starting
+ExecStart=kube-scheduler --config=/etc/kubernetes/config/kube-scheduler.yaml
 Restart=on-failure
 RestartSec=5
 

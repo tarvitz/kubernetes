@@ -4,20 +4,19 @@ Documentation=https://github.com/kubernetes/kubernetes
 After=etcd.service
 
 [Service]
-Environment=IP_EXTERNAL=178.79.168.130
 Environment=ETCD_MASTER_IP=127.0.0.1
 Environment=ETCD_PORT=2379
-ExecStart=kube-apiserver \
-   --bind-address=${IP_EXTERNAL} \
+ExecStart=/opt/bin/kube-apiserver \
+   --bind-address=0.0.0.0 \
    --allow-privileged \
    --apiserver-count=1 \
    --authorization-mode=Node,RBAC \
    --storage-backend=etcd3 \
    --etcd-servers=https://${ETCD_MASTER_IP}:${ETCD_PORT} \
-   --etcd-certfile=/etc/etcd/kubernetes.pem \
-   --etcd-keyfile=/etc/etcd/kubernetes-key.pem \
-   --etcd-cafile=/etc/etcd/ca.pem \
-   --token-auth-file=/etc/kubernetes/auth-token.csv \
+   --etcd-certfile=/var/lib/kubernetes/kubernetes.pem \
+   --etcd-keyfile=/var/lib/kubernetes/kubernetes-key.pem \
+   --etcd-cafile=/var/lib/kubernetes/ca.pem \
+   --token-auth-file=/var/lib/kubernetes/auth-token.csv \
    --service-cluster-ip-range=10.32.0.0/24 \
    --runtime-config=api/all \
    --client-ca-file=/var/lib/kubernetes/ca.pem \

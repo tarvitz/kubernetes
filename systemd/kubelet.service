@@ -5,6 +5,13 @@ After=kube-apiserver.service
 Requires=kube-apiserver.service containerd.service
 
 [Service]
+#: note that global ip would be taken instead of using --node-ip
+Environment=NODE_IP=192.168.1.1
+
+#: note that hostname would be taken from /etc/hostname
+#: please note that you have to bound certificate with given name to
+#: run kubectl port-forward properly
+Environment=HOSTNAME_NAME=w40k.net
 ExecStart=kubelet \
         --root-dir=/var/lib/kubernetes/kubelet \
         --config=/var/lib/kubernetes/kubelet/kubelet-config.yaml \
@@ -16,7 +23,9 @@ ExecStart=kubelet \
         --container-runtime=remote \
         --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock \
         --image-pull-progress-deadline=10m \
+        --hostname-override=w40k.net \
         --node-labels=w40k.net \
+        --node-ip=${NODE_IP} \
         --v=2
 Restart=on-failure
 RestartSec=5

@@ -32,7 +32,8 @@ oom_score = 0
     sandbox_image = "k8s.gcr.io/pause:3.1"
     stats_collect_period = 10
     systemd_cgroup = false
-    enable_tls_streaming = true
+    #: without proper exposing tls certs kubectl exec won't work
+    enable_tls_streaming = false
     max_container_log_line_size = 16384
     [plugins.cri.containerd]
       snapshotter = "overlayfs"

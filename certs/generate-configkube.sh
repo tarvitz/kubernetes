@@ -1,8 +1,6 @@
 
 source ./env.sh
 
-KUBE_API_SERVER_PUBLIC_ADDRESS="178.79.168.130"
-
 [[ ! -d kubeconfig ]] && mkdir kubeconfig
 
 echo "generate kubelet configurations"
