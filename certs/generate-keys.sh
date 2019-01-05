@@ -18,7 +18,6 @@ else
             -profile=kubernetes admin-csr.json | cfssljson -bare admin
 fi
 
-#for i in `seq $INSTANCES`; do
 for idx in ${!EXTERNAL_IPS[*]}; do
   #: skip 0 index
   if [ $idx -eq 0 ]; then
