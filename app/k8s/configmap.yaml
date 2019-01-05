@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: example
+  name: backend
+  namespace: example
+data:
+  ALLOWED_HOSTS: "kubernetes-example.w40k.net,*"
+  DATABASE_ENGINE: "django.db.backends.postgresql_psycopg2"
+  DATABASE_HOST: "w40k.net"
+  DATABASE_USER: "kubernetes_example"
+  DATABASE_NAME: "kubernetes_example"
+  DATABASE_PORT: "5432"
+  DEBUG: "False"
+
+  STATIC_ROOT: "/static/"
+
+  #: WSGI server related settings
+  WSGI_SERVER_WORKERS: "2"
+  WSGI_SERVER_LOG_LEVEL: "info"

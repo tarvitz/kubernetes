@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+    <style type="text/css">
+        /*
+        * Globals
+        */
+        /* Links */
+        a,
+        a:focus,
+        a:hover {
+            color: #fff;
+        }
+
+        /* Custom default button */
+        .btn-secondary,
+        .btn-secondary:hover,
+        .btn-secondary:focus {
+            color: #333;
+            text-shadow: none; /* Prevent inheritance from `body` */
+            background-color: #fff;
+            border: .05rem solid #fff;
+        }
+
+
+        /*
+         * Base structure
+         */
+
+        html,
+        body {
+            height: 100%;
+            background-color: #333;
+        }
+
+        body {
+            display: -ms-flexbox;
+            display: flex;
+            color: #fff;
+            text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+            box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+        }
+
+        .cover-container {
+            max-width: 72em;
+        }
+
+        /*
+         * Header
+         */
+        .masthead {
+            margin-bottom: 2rem;
+        }
+        .masthead-brand .logo {
+            width: 32px;
+            height: 32px;
+        }
+        .masthead-brand {
+            margin-bottom: 0;
+        }
+
+        .nav-masthead .nav-link {
+            padding: .25rem 0;
+            font-weight: 700;
+            color: rgba(255, 255, 255, .5);
+            background-color: transparent;
+            border-bottom: .25rem solid transparent;
+        }
+
+        .nav-masthead .nav-link:hover,
+        .nav-masthead .nav-link:focus {
+            border-bottom-color: rgba(255, 255, 255, .25);
+        }
+
+        .nav-masthead .nav-link + .nav-link {
+            margin-left: 1rem;
+        }
+
+        .nav-masthead .active {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        @media (min-width: 48em) {
+            .masthead-brand {
+                float: left;
+            }
+            .nav-masthead {
+                float: right;
+            }
+        }
+
+        /*
+         * Cover
+         */
+        .cover {
+            padding: 0 1.5rem;
+        }
+        .cover .btn-lg {
+            padding: .75rem 1.25rem;
+            font-weight: 700;
+        }
+        /*
+         * Footer
+         */
+        .mastfoot {
+            color: rgba(255, 255, 255, .5);
+        }
+    </style>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand">
+                    <img class='logo' src="https://kubernetes.io/images/wheel.png">
+                    Kubernetes Example
+                </h3>
+                <nav class="nav nav-masthead justify-content-center">
+                    {% block header %}{% endblock %}
+                </nav>
+            </div>
+        </header>
+
+        <main role="main" class="inner cover">
+        {% block content %}{% endblock %}
+        </main>
+
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                {% block footer %}
+                    <p>Лежит на
+                        <a href="https://github.com/tarvitz/kubernetes">Github</a>.</p>
+                {% endblock %}
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

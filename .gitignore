@@ -1,4 +1,13 @@
 *.pem
 *.csr
+__pycache__
+*.py[co]
+*.iml
+.idea
+
 certs/node-*.*
 certs/kubeconfig
+app/**/settings/local.py
+app/**/*.sqlite3
+app/k8s/secret.yaml
+app/k8s/registry.yaml
