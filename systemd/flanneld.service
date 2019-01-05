@@ -5,7 +5,7 @@ Before=etcd.service
 
 [Service]
 Type=notify
-Environment=FLANNEL_ETCD=https://127.0.0.1:2379
+Environment=FLANNEL_ETCD=https://192.168.153.60:2379
 Environment=PUBLIC_IP=178.79.168.130
 
 ExecStart=/usr/bin/flanneld -etcd-endpoints=${FLANNEL_ETCD} -etcd-prefix=${FLANNEL_ETCD_KEY} \
