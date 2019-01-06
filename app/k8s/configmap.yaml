@@ -6,7 +6,7 @@ metadata:
   name: backend
   namespace: example
 data:
-  ALLOWED_HOSTS: "kubernetes-example.w40k.net,*"
+  ALLOWED_HOSTS: "kubernetes-example.w40k.net,no-https.kubernetes-example.w40k.net,*"
   DATABASE_ENGINE: "django.db.backends.postgresql_psycopg2"
   DATABASE_HOST: "w40k.net"
   DATABASE_USER: "kubernetes_example"

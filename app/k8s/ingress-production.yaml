@@ -16,6 +16,7 @@ spec:
    - kubernetes-example.w40k.net
    secretName: example-production-letsencrypt
  rules:
+ #: with letsencrypt ssl
  - host: kubernetes-example.w40k.net
    http:
      paths:
@@ -23,3 +24,11 @@ spec:
        backend:
          serviceName: backend
          servicePort: 80
+ #: without ssl connection
+ - host: no-https.kubernetes-example.w40k.net
+   http:
+     paths:
+       - path: /
+         backend:
+           serviceName: backend
+           servicePort: 80

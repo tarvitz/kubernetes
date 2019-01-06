@@ -1,3 +1,4 @@
+#: works with 1.12.x but does not work with 1.13.0 :)
 apiVersion: componentconfig/v1alpha1
 kind: KubeSchedulerConfiguration
 clientConnection:
