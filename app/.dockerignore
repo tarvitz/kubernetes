@@ -1,0 +1,9 @@
+./k8s
+./hack
+*.iml
+*.idea
+src/build
+src/*.egg-info
+src/backend/*.sqlite3
+#: remove local configuration from build
+src/backend/settings/local.py

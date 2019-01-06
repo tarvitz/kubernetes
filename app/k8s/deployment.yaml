@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: example
+  name: backend
+  namespace: example
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: example-backend
+  template:
+    metadata:
+      name: example-backend
+      labels:
+        app: example-backend
+    spec:
+      volumes:
+        - name: static-volume
+          emptyDir: {}
+      imagePullSecrets:
+        - name: registry-blacklibrary
+      initContainers:
+        - name: init
+          image: nfox/k8s-example-backend:dev
+          imagePullPolicy: Always
+          command:
+            - /bin/sh
+            - -c
+            - STATIC_ROOT=/static/ site-manage collectstatic --noinput
+              && site-manage migrate --noinput
+
+          envFrom:
+            - configMapRef:
+                name: "backend"
+            - secretRef:
+                name: "backend"
+          volumeMounts:
+            - mountPath: /static
+              name: static-volume
+              readOnly: false
+      containers:
+        - name: application
+          image: nfox/k8s-example-backend:dev
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: "backend"
+            - secretRef:
+                name: "backend"
+          volumeMounts:
+            - mountPath: /static/
+              name: static-volume
+              readOnly: true
+          resources:
+            limits:
+              cpu: 200m
+              memory: 64Mi
+          #: health section
+          readinessProbe:
+            httpGet:
+              port: 8000
+              path: /status/
+            failureThreshold: 3
+            initialDelaySeconds: 2
+            successThreshold: 1
+            periodSeconds: 5
+            timeoutSeconds: 2
+          livenessProbe:
+            httpGet:
+              port: 8000
+              path: /healthz/
+            initialDelaySeconds: 2
+            timeoutSeconds: 2
+            periodSeconds: 5

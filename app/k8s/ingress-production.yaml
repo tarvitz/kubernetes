@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: example-ingress-production
+ namespace: example
+ annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    #: tls part
+    ingress.kubernetes.io/ssl-redirect: "true"
+    kubernetes.io/tls-acme: "true"
+    certmanager.k8s.io/issuer: example-letsencrypt-production
+    kubernetes.io/ingress.class: "nginx"
+spec:
+ tls:
+ - hosts:
+   - kubernetes-example.w40k.net
+   secretName: example-production-letsencrypt
+ rules:
+ #: with letsencrypt ssl
+ - host: kubernetes-example.w40k.net
+   http:
+     paths:
+     - path: /
+       backend:
+         serviceName: backend
+         servicePort: 80
+ #: without ssl connection
+ - host: no-https.kubernetes-example.w40k.net
+   http:
+     paths:
+       - path: /
+         backend:
+           serviceName: backend
+           servicePort: 80

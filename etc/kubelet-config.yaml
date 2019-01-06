@@ -10,16 +10,27 @@ authentication:
 authorization:
   mode: Webhook
 clusterDomain: "cluster.local"
+
+#: dns for kubernetes service discovery, consider that this ns
+#: entry would be exposed to container's /etc/resolve.conf file
 clusterDNS:
   - "178.79.168.130"
   # - "10.32.0.10"
-#: 5 days
+
+#: 5 days before running garbage collection upon images
 imageMinimumGCAge: "120h"
 resolvConf: "/etc/resolv.conf"
 runtimeRequestTimeout: "15m"
+
+#: don't forget to change certificate paths according to your node
+#: placements. i.e. after copying this config file to node-2 consider
+#: changing certificates
 tlsCertFile: "/var/lib/kubernetes/kubelet/node-1.pem"
 tlsPrivateKeyFile: "/var/lib/kubernetes/kubelet/node-1-key.pem"
-#: reserved by system
+
+#: Resourced that would be reserved by system, i.e. this amount of
+#: resources would be subtracted from available resource set for kubernetes
+#: environment
 systemReserved:
     cpu: 200m
     memory: 600Mi

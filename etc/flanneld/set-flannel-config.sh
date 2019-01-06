@@ -6,4 +6,3 @@ ETCDCTL_KEY_FILE='/var/lib/kubernetes/kubernetes-key.pem' \
 ETCDCTL_ENDPOINTS='https://127.0.0.1:2379' \
 \
 etcdctl set /coreos.com/network/config < ./${config}
-
