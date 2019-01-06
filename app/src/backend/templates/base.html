@@ -1,3 +1,4 @@
+{% load i18n %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -124,7 +125,7 @@
             <div class="inner">
                 <h3 class="masthead-brand">
                     <img class='logo' src="https://kubernetes.io/images/wheel.png">
-                    Kubernetes Example
+                    Kubernetes 20$ Cluster Example: <a href="#">ru</a> | <a href="#">en</a>
                 </h3>
                 <nav class="nav nav-masthead justify-content-center">
                     {% block header %}{% endblock %}
@@ -139,8 +140,7 @@
         <footer class="mastfoot mt-auto">
             <div class="inner">
                 {% block footer %}
-                    <p>Лежит на
-                        <a href="https://github.com/tarvitz/kubernetes">Github</a>.</p>
+                    <p>{% trans "Lies on" %}<a href="https://github.com/tarvitz/kubernetes">Github</a>.</p>
                 {% endblock %}
             </div>
         </footer>
