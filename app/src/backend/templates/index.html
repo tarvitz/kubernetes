@@ -10,20 +10,9 @@
 {% endblock %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <p class="lead">
-            You've logged as <span class="badge badge-light">{{ user.email }}</span>
-        </p>
-        {% if user.is_verified %}
-            <p class="lead">You are verified, now it's time to take your cookie (follow instructions): </p>
-            <div class="alert alert-success">{{ secret.content | safe }}</div>
-        {% else %}
-            <div class="info">
-                You are still not verified, it's probably because you have been
-                subscribed not far too long or logged in directly.
-            </div>
-        {% endif %}
-    {% else %}
-        Please <a href="{% url "admin:login" %}">login</a>
-    {% endif %}
+    Self links:
+    <div class="content">
+        <a class="btn btn-success" href="https://kubernetes-example.w40k.net/">https version</a>
+        <a class="btn btn-warning" href="http://no-https.kubernetes-example.w40k.net/">http-only version</a>
+    </div>
 {% endblock %}
