@@ -26,7 +26,9 @@ ExecStart=/opt/bin/kube-apiserver \
    --kubelet-certificate-authority=/var/lib/kubernetes/ca.pem \
    --kubelet-client-certificate=/var/lib/kubernetes/kubernetes.pem \
    --kubelet-client-key=/var/lib/kubernetes/kubernetes-key.pem \
-   --kubelet-https=true
+   --kubelet-https=true \
+   --requestheader-client-ca-file=/var/lib/kubernetes/ca.pem \
+   -v=2
 
 Restart=on-failure
 RestartSec=5
