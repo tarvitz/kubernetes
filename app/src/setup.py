@@ -48,7 +48,7 @@ CLASSIFIERS = [
 
 install_requires = [
     #: BSD licenses
-    'Django==2.2.10',
+    'Django==2.2.13',
 ]
 test_requires = []
 
